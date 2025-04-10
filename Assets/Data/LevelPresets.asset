@@ -14,4 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards:
   - frontSprite: {fileID: 0}
-    id: 
+    id: 1
+    title: Banana
+  - frontSprite: {fileID: 0}
+    id: 2
+    title: Ball
+  - frontSprite: {fileID: 0}
+    id: 3
+    title: Chicken
+  - frontSprite: {fileID: 0}
+    id: 4
+    title: Poteto
+  - frontSprite: {fileID: 0}
+    id: 5
+    title: Fish
