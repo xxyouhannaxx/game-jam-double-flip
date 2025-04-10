@@ -1,3 +1,4 @@
+using Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -80,6 +81,7 @@ public class Card : MonoBehaviour
         if (_flipAnimation == null)
         {
             _flipAnimation = StartCoroutine(FlipAnimation(true, openedCardRotation, OnCardSelected));
+            AudioManager.instance.PlayAudioById(AudioManager.FLIP_CARD);
         }
     }
 

@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     private CanvasManager _canvasManager;
     [SerializeField]
     private LevelPresets _presets;
-    [SerializeField]
-    private AudioManager _audioManager;
 
     //progression handlings
     private ProgressionHandler _progressionHandler = new ProgressionHandler();
@@ -98,7 +96,7 @@ public class GameManager : MonoBehaviour
                 previous.Close();
                 //reset streak
                 _streak = 0;
-                _audioManager.PlayAudioById(AudioManager.MISMATCH_ID);
+                AudioManager.instance.PlayAudioById(AudioManager.MISMATCH_ID);
                 OnStreakUpdated?.Invoke(_streak);
             }
         }
@@ -113,7 +111,7 @@ public class GameManager : MonoBehaviour
         _score += value;
         _streak++;
         progression--;
-        _audioManager.PlayAudioById(AudioManager.MATCH_ID);
+        AudioManager.instance.PlayAudioById(AudioManager.MATCH_ID);
 
         OnScoreUpdated?.Invoke(_score);
         OnStreakUpdated?.Invoke(_streak);
@@ -134,7 +132,7 @@ public class GameManager : MonoBehaviour
 
     public void WinLevel()
     {
-        _audioManager.PlayAudioById(AudioManager.LEVEL_UP_ID, true);
+        AudioManager.instance.PlayAudioById(AudioManager.LEVEL_UP_ID, true);
         CreateLevel();
         _progressionHandler.UpdateProgress(_level - 1, _score, _streak);
         _progressionHandler.SaveProgress();

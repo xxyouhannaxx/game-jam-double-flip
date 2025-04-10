@@ -19,3 +19,5 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 09479166285e19a4cb2271c14473f42d, type: 3}
   - id: level
     clip: {fileID: 8300000, guid: 455ac9b487edd9a4d92fdc339953e282, type: 3}
+  - id: flip
+    clip: {fileID: 8300000, guid: 22006fdc6930a704daac5544e361567d, type: 3}
