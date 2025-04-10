@@ -83,8 +83,8 @@ public class GameManager : MonoBehaviour
 
             if (previous.id == card.id)
             {
-                card.DisableCard();
-                previous.DisableCard();
+                card.MatchCard();
+                previous.MatchCard();
                 Success(1 + _streak);
             }
             else

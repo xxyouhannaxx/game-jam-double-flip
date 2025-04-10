@@ -42,7 +42,7 @@ public class CanvasManager : MonoBehaviour
     {
         foreach (Card card in _cards)
         {
-            Destroy(card.gameObject);
+            card.Dispose();
         }
         _cards.Clear();
     }
