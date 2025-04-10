@@ -21,6 +21,7 @@ public class Card : MonoBehaviour
 
     Quaternion openedCardRotation = Quaternion.Euler(0, 180, 0);
     Quaternion closedCardRotation = Quaternion.Euler(0, 0, 0);
+    Coroutine _animation = null;
 
     public delegate void CardEventHandler(Card card);
     public CardEventHandler OnCardSelected;
@@ -32,12 +33,18 @@ public class Card : MonoBehaviour
 
     public void Select()
     {
-        StartCoroutine(Animation(true, openedCardRotation, OnCardSelected));
+        if (_animation == null)
+        {
+            _animation = StartCoroutine(Animation(true, openedCardRotation, OnCardSelected));
+        }
     }
 
     public void Close()
     {
-        StartCoroutine(Animation(false, closedCardRotation));
+        if (_animation == null)
+        {
+            _animation = StartCoroutine(Animation(false, closedCardRotation));
+        }
     }
 
     /// <summary>
@@ -67,5 +74,6 @@ public class Card : MonoBehaviour
 
         transform.rotation = endRotation;
         cardEventHandler?.Invoke(this);
+        _animation = null;
     }
 }
