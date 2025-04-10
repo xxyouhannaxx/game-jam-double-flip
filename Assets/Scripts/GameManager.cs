@@ -1,7 +1,8 @@
+using Progression;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using TMPro.EditorUtilities;
+using System.IO;
+using Tools;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private LevelPresets _presets;
 
+    //progression handlings
+    private ProgressionHandler _progressionHandler = new ProgressionHandler();
+
+    //Gameplay
     private Queue<Card> selectedCards = new Queue<Card>();
     private int _score = 0;
     private int _streak = 0;
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        LoadProgress();
         CreateLevel();
         OnScoreUpdated += _canvasManager.UpdateScore;
         OnLevelUpdated += _canvasManager.UpdateLevel;
@@ -55,14 +61,13 @@ public class GameManager : MonoBehaviour
 
         progression = set.Count / 2;
         _level++;
-
         OnLevelUpdated?.Invoke(_level);
     }
 
     /// <summary>
     /// Game logic to reward player, update streak etc...
     /// </summary>
-    /// <param name="card">Currenty selected card</param>
+    /// <param name="card">Currently selected card</param>
     public void CompareCards(Card card)
     {
         //first card in the list
@@ -107,7 +112,24 @@ public class GameManager : MonoBehaviour
 
         if (progression == 0)
         {
-            CreateLevel();
+            WinLevel();
         }
     }
+
+    public void LoadProgress()
+    {
+        ProgressData data = _progressionHandler.LoadProgress();
+        _level = data.level;
+        _score = data.score;
+        _streak = data.streak;
+    }
+
+    public void WinLevel()
+    {
+        CreateLevel();
+        _progressionHandler.UpdateProgress(_level - 1, _score, _streak);
+        _progressionHandler.SaveProgress();
+
+    }
+
 }
