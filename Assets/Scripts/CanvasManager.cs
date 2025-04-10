@@ -1,28 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using static Card;
 
 public class CanvasManager : MonoBehaviour
 {
+    [Header("Dependencies")]
     [SerializeField]
     private Card _cardPrefab;
     [SerializeField]
     private Transform _cardsPanel;
     private List<Card> _cards = new List<Card>();
+    [Header("HUD")]
+    [SerializeField]
+    private TextMeshProUGUI _level;
+    [SerializeField]
+    private TextMeshProUGUI _score;
+    [SerializeField]
+    private TextMeshProUGUI _streak;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+    /// <summary>
+    /// Use template to generate a new card set
+    /// </summary>
+    /// <param name="set">Set of cards</param>
+    /// <param name="selectionCallback">a callback on card selection</param>
     public void GenerateCards(List<CardData> set, CardEventHandler selectionCallback = null)
     {
         ClearCards();
@@ -43,5 +45,20 @@ public class CanvasManager : MonoBehaviour
             Destroy(card.gameObject);
         }
         _cards.Clear();
+    }
+
+    public void UpdateScore(int score)
+    {
+        _score.text = "Score:" + score.ToString();
+    }
+
+    public void UpdateStreak(int streak)
+    {
+        _streak.text = "Streak:" + streak.ToString();
+    }
+
+    public void UpdateLevel(int level)
+    {
+        _level.text = level.ToString();
     }
 }

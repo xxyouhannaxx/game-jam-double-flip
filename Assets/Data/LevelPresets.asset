@@ -28,3 +28,4 @@ MonoBehaviour:
   - frontSprite: {fileID: 0}
     id: 5
     title: Fish
+  levels: 030000000200000005000000

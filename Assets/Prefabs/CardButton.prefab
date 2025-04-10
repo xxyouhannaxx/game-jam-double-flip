@@ -333,7 +333,7 @@ MonoBehaviour:
   _background: {fileID: 6060248538679303272}
   _front: {fileID: 6060248537897382371}
   _title: {fileID: 5951737891629458509}
-  _animationTime: 1
+  _animationTime: 0.5
   _animationCurve:
     serializedVersion: 2
     m_Curve:
