@@ -28,6 +28,18 @@ MonoBehaviour:
   - frontSprite: {fileID: 0}
     id: 5
     title: Fish
+  - frontSprite: {fileID: 0}
+    id: 6
+    title: Pizza
+  - frontSprite: {fileID: 0}
+    id: 7
+    title: Cake
+  - frontSprite: {fileID: 0}
+    id: 8
+    title: House
+  - frontSprite: {fileID: 0}
+    id: 9
+    title: Dragon
   levels:
   - cardAmount: 2
     revealTime: 1
