@@ -31,10 +31,10 @@ MonoBehaviour:
   levels:
   - cardAmount: 2
     revealTime: 1
-    columnCount: 1
+    columnCount: 2
   - cardAmount: 3
     revealTime: 1
-    columnCount: 2
+    columnCount: 3
   - cardAmount: 5
     revealTime: 1
-    columnCount: 10
+    columnCount: 7

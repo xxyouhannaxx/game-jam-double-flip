@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         LoadProgress();
         CreateLevel();
+        _canvasManager.ResetLevelsCallback = ResetLevels;
         OnScoreUpdated += _canvasManager.UpdateScore;
         OnLevelUpdated += _canvasManager.UpdateLevel;
         OnStreakUpdated += _canvasManager.UpdateStreak;
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        _canvasManager.ResetLevelsCallback = null;
         OnScoreUpdated -= _canvasManager.UpdateScore;
         OnLevelUpdated -= _canvasManager.UpdateLevel;
         OnStreakUpdated -= _canvasManager.UpdateStreak;
@@ -137,6 +139,16 @@ public class GameManager : MonoBehaviour
         _progressionHandler.UpdateProgress(_level - 1, _score, _streak);
         _progressionHandler.SaveProgress();
 
+    }
+
+    public void ResetLevels()
+    {
+        _score = 0;
+        _level = 0;
+        _score = 0;
+        _progressionHandler.UpdateProgress(0, 0, 0);
+        _progressionHandler.SaveProgress();
+        CreateLevel();
     }
 
 }

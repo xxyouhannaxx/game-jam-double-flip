@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,6 +21,7 @@ public class CanvasManager : MonoBehaviour
     private TextMeshProUGUI _score;
     [SerializeField]
     private TextMeshProUGUI _streak;
+    public Action ResetLevelsCallback;
 
     /// <summary>
     /// Use template to generate a new card set
@@ -62,5 +64,10 @@ public class CanvasManager : MonoBehaviour
     public void UpdateLevel(int level)
     {
         _level.text = level.ToString();
+    }
+
+    public void ResetLevels()
+    {
+        ResetLevelsCallback?.Invoke();
     }
 }
