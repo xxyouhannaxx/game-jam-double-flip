@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
     private CanvasManager _canvasManager;
     [SerializeField]
     private LevelPresets _presets;
-    [SerializeField]
-    private AudioManager _audioManager;
 
     //progression handlings
     private ProgressionHandler _progressionHandler = new ProgressionHandler();
@@ -31,10 +29,11 @@ public class GameManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         LoadProgress();
         CreateLevel();
+        _canvasManager.ResetLevelsCallback = ResetLevels;
         OnScoreUpdated += _canvasManager.UpdateScore;
         OnLevelUpdated += _canvasManager.UpdateLevel;
         OnStreakUpdated += _canvasManager.UpdateStreak;
@@ -46,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        _canvasManager.ResetLevelsCallback = null;
         OnScoreUpdated -= _canvasManager.UpdateScore;
         OnLevelUpdated -= _canvasManager.UpdateLevel;
         OnStreakUpdated -= _canvasManager.UpdateStreak;
@@ -54,15 +54,18 @@ public class GameManager : MonoBehaviour
     public void CreateLevel()
     {
         List<CardData> set;
-
-        if (_presets.TryGetNextLevelSet(out set, _level))
+        if (_presets.TryGetLevelData(out LevelData data, _level))
         {
-            _canvasManager.GenerateCards(set, CompareCards);
+            if (_presets.TryGetLevelSet(data, out set))
+            {
+                _canvasManager.GenerateCards(set, data.columnCount, data.revealTime, CompareCards);
+            }
+
+            progression = set.Count / 2;
+            _level++;
+            OnLevelUpdated?.Invoke(_level);
         }
 
-        progression = set.Count / 2;
-        _level++;
-        OnLevelUpdated?.Invoke(_level);
     }
 
     /// <summary>
@@ -83,8 +86,8 @@ public class GameManager : MonoBehaviour
 
             if (previous.id == card.id)
             {
-                card.DisableCard();
-                previous.DisableCard();
+                card.MatchCard();
+                previous.MatchCard();
                 Success(1 + _streak);
             }
             else
@@ -93,7 +96,7 @@ public class GameManager : MonoBehaviour
                 previous.Close();
                 //reset streak
                 _streak = 0;
-                _audioManager.PlayAudioById(AudioManager.MISMATCH_ID);
+                AudioManager.instance.PlayAudioById(AudioManager.MISMATCH_ID);
                 OnStreakUpdated?.Invoke(_streak);
             }
         }
@@ -108,7 +111,7 @@ public class GameManager : MonoBehaviour
         _score += value;
         _streak++;
         progression--;
-        _audioManager.PlayAudioById(AudioManager.MATCH_ID);
+        AudioManager.instance.PlayAudioById(AudioManager.MATCH_ID);
 
         OnScoreUpdated?.Invoke(_score);
         OnStreakUpdated?.Invoke(_streak);
@@ -129,11 +132,21 @@ public class GameManager : MonoBehaviour
 
     public void WinLevel()
     {
-        _audioManager.PlayAudioById(AudioManager.LEVEL_UP_ID, true);
+        AudioManager.instance.PlayAudioById(AudioManager.LEVEL_UP_ID, true);
         CreateLevel();
         _progressionHandler.UpdateProgress(_level - 1, _score, _streak);
         _progressionHandler.SaveProgress();
 
+    }
+
+    public void ResetLevels()
+    {
+        _score = 0;
+        _level = 0;
+        _score = 0;
+        _progressionHandler.UpdateProgress(0, 0, 0);
+        _progressionHandler.SaveProgress();
+        CreateLevel();
     }
 
 }

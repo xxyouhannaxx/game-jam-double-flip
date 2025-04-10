@@ -8,7 +8,7 @@ namespace Progression
     public class LevelPresets : ScriptableObject
     {
         public List<CardData> cards = new List<CardData>();
-        public List<int> levels = new List<int>();
+        public List<LevelData> levels = new List<LevelData>();
 
         public bool TryGetSet(int pairCount, out List<CardData> set)
         {
@@ -33,10 +33,22 @@ namespace Progression
             return true;
         }
 
-        public bool TryGetNextLevelSet(out List<CardData> set, int level = 0)
+        public bool TryGetLevelSet(LevelData levelData, out List<CardData> set)
         {
             set = new List<CardData>();
 
+            if (levelData == null)
+            {
+                Debug.LogError($"{nameof(LevelPresets)} level data was null");
+                return false;
+            }
+
+            return TryGetSet(levelData.cardAmount, out set);
+        }
+
+        public bool TryGetLevelData(out LevelData data, int level = 0)
+        {
+            data = null;
             if (levels.Count == 0)
             {
                 Debug.LogError($"{nameof(LevelPresets)} has no levels, please ensure that there's at least 1 level in the list");
@@ -48,7 +60,8 @@ namespace Progression
                 level = levels.Count - 1;
             }
 
-            return TryGetSet(levels[level], out set);
+            data = levels[level];
+            return true;
         }
     }
 }

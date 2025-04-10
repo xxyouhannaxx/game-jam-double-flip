@@ -7,9 +7,24 @@ namespace Audio
 {
     public class AudioManager : MonoBehaviour
     {
+        public static AudioManager instance = null;
+
         public const string MATCH_ID = "match";
         public const string MISMATCH_ID = "mismatch";
         public const string LEVEL_UP_ID = "level";
+        public const string FLIP_CARD = "flip";
+
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         [SerializeField]
         private List<AudioSource> _sources = new List<AudioSource>();
@@ -21,7 +36,7 @@ namespace Audio
         /// </summary>
         /// <param name="audioClip">clip to play</param>
         /// <param name="isMandatory"> do not skip this audio even if all players are busy</param>
-        public void Play(AudioClip audioClip, bool isMandatory = false)
+        private void Play(AudioClip audioClip, bool isMandatory = false)
         {
             AudioSource source = _sources.Find(x => !x.isPlaying);
 
