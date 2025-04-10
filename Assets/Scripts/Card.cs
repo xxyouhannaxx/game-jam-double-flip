@@ -1,16 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
     [SerializeField]
+    private Button _button;
+    [SerializeField]
     private Image _background;
     [SerializeField]
     private Image _front;
-    private string _id;
+    [SerializeField]
+    private TextMeshProUGUI _title;
+    public int id {  get; private set; }
     [Header("Animation")]
     [Tooltip("Animation duration")]
     [SerializeField]
@@ -26,9 +31,12 @@ public class Card : MonoBehaviour
     public delegate void CardEventHandler(Card card);
     public CardEventHandler OnCardSelected;
 
-    public void Initialize()
+    public void Initialize(CardData data)
     {
-        //TODO: import card data once available
+        id = data.id;
+        _front.sprite = data.frontSprite;
+        _title.text = data.title;
+        _button.interactable = true;
     }
 
     public void Select()
@@ -39,6 +47,10 @@ public class Card : MonoBehaviour
         }
     }
 
+    public void DisableCard()
+    {
+        _button.interactable = false;
+    }
     public void Close()
     {
         if (_animation == null)
@@ -73,7 +85,7 @@ public class Card : MonoBehaviour
         }
 
         transform.rotation = endRotation;
-        cardEventHandler?.Invoke(this);
         _animation = null;
+        cardEventHandler?.Invoke(this);
     }
 }
