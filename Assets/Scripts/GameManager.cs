@@ -13,8 +13,7 @@ public class GameManager : MonoBehaviour
     private LevelPresets _presets;
     [SerializeField]
     private AudioManager _audioManager;
-    [Header("Other")]
-    private float _revealTime = 1;
+
     //progression handlings
     private ProgressionHandler _progressionHandler = new ProgressionHandler();
 
@@ -55,15 +54,18 @@ public class GameManager : MonoBehaviour
     public void CreateLevel()
     {
         List<CardData> set;
-
-        if (_presets.TryGetNextLevelSet(out set, _level))
+        if (_presets.TryGetLevelData(out LevelData data, _level))
         {
-            _canvasManager.GenerateCards(set, _revealTime, CompareCards);
+            if (_presets.TryGetLevelSet(data, out set))
+            {
+                _canvasManager.GenerateCards(set, data.columnCount, data.revealTime, CompareCards);
+            }
+
+            progression = set.Count / 2;
+            _level++;
+            OnLevelUpdated?.Invoke(_level);
         }
 
-        progression = set.Count / 2;
-        _level++;
-        OnLevelUpdated?.Invoke(_level);
     }
 
     /// <summary>

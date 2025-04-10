@@ -28,4 +28,13 @@ MonoBehaviour:
   - frontSprite: {fileID: 0}
     id: 5
     title: Fish
-  levels: 030000000200000005000000
+  levels:
+  - cardAmount: 2
+    revealTime: 1
+    columnCount: 1
+  - cardAmount: 3
+    revealTime: 1
+    columnCount: 2
+  - cardAmount: 5
+    revealTime: 1
+    columnCount: 10

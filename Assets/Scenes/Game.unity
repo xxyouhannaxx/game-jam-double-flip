@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardPrefab: {fileID: 6060248538226535152, guid: 627859d0c92e9544c9769c53a541e091, type: 3}
-  _cardsPanel: {fileID: 1250215407}
+  _gridLayoutGroup: {fileID: 1250215408}
   _level: {fileID: 327599617}
   _score: {fileID: 915510641}
   _streak: {fileID: 83755495}
@@ -1545,7 +1545,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0, g: 0.7039418, b: 0.9622642, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1818,7 +1818,7 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 200, y: 200}
   m_Spacing: {x: 20, y: 20}
-  m_Constraint: 0
+  m_Constraint: 1
   m_ConstraintCount: 2
 --- !u!114 &1250215409
 MonoBehaviour:

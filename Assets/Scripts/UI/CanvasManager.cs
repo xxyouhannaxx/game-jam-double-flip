@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Card;
 
 public class CanvasManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField]
     private Card _cardPrefab;
     [SerializeField]
-    private Transform _cardsPanel;
+    private GridLayoutGroup _gridLayoutGroup;
     private List<Card> _cards = new List<Card>();
     [Header("HUD")]
     [SerializeField]
@@ -25,13 +26,14 @@ public class CanvasManager : MonoBehaviour
     /// </summary>
     /// <param name="set">Set of cards</param>
     /// <param name="selectionCallback">a callback on card selection</param>
-    public void GenerateCards(List<CardData> set, float revealTime, CardEventHandler selectionCallback = null)
+    public void GenerateCards(List<CardData> set, int columnCount, float revealTime, CardEventHandler selectionCallback = null)
     {
         ClearCards();
+        _gridLayoutGroup.constraintCount = columnCount; 
 
         for (int i = 0; i < set.Count; i++)
         {
-            Card card = Instantiate(_cardPrefab, _cardsPanel.transform);
+            Card card = Instantiate(_cardPrefab, _gridLayoutGroup.transform);
             card.Initialize(set[i], revealTime);
             card.OnCardSelected += selectionCallback;
             _cards.Add(card);
