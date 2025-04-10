@@ -40,6 +40,15 @@ MonoBehaviour:
   - frontSprite: {fileID: 0}
     id: 9
     title: Dragon
+  - frontSprite: {fileID: 0}
+    id: 10
+    title: Lake
+  - frontSprite: {fileID: 0}
+    id: 11
+    title: Table
+  - frontSprite: {fileID: 0}
+    id: 12
+    title: Chair
   levels:
   - cardAmount: 2
     revealTime: 1
@@ -47,6 +56,6 @@ MonoBehaviour:
   - cardAmount: 3
     revealTime: 1
     columnCount: 3
-  - cardAmount: 5
+  - cardAmount: 12
     revealTime: 1
     columnCount: 7
