@@ -6,7 +6,7 @@ using UnityEngine;
 public class LevelPresets : ScriptableObject
 {
     public List<CardData> cards = new List<CardData>();
-
+    public List<int> levels = new List<int>();
 
     public bool TryGetSet(int pairCount, out List<CardData> set)
     {
@@ -29,5 +29,23 @@ public class LevelPresets : ScriptableObject
 
         set.Shuffle();
         return true;
+    }
+
+    public bool TryGetNextLevelSet(out List<CardData> set, int level = 0)
+    {
+        set = new List<CardData>();
+
+        if (levels.Count == 0)
+        {
+            Debug.LogError($"{nameof(LevelPresets)} has no levels, please ensure that there's at least 1 level in the list");
+            return false;
+        }
+
+        if (level >= levels.Count)
+        {
+            level = levels.Count - 1;
+        }
+
+        return TryGetSet(levels[level], out set);
     }
 }

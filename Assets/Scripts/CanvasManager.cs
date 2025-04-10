@@ -25,6 +25,8 @@ public class CanvasManager : MonoBehaviour
 
     public void GenerateCards(List<CardData> set, CardEventHandler selectionCallback = null)
     {
+        ClearCards();
+
         for (int i = 0; i < set.Count; i++)
         {
             Card card = Instantiate(_cardPrefab, _cardsPanel.transform);
@@ -32,5 +34,14 @@ public class CanvasManager : MonoBehaviour
             card.OnCardSelected += selectionCallback;
             _cards.Add(card);
         }
+    }
+
+    public void ClearCards()
+    {
+        foreach (Card card in _cards)
+        {
+            Destroy(card.gameObject);
+        }
+        _cards.Clear();
     }
 }

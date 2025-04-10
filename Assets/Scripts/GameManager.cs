@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     private List<Card> selectedCards = new List<Card>();
     private int _score = 0;
     private int _streak = 0;
+    private int level = 0;
+    private int progression = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +25,13 @@ public class GameManager : MonoBehaviour
     {
         List<CardData> set;
 
-        if (_presets.TryGetSet(5, out set))
+        if (_presets.TryGetNextLevelSet(out set, level))
         {
             _canvasManager.GenerateCards(set, CompareCards);
         }
+
+        progression = set.Count / 2;
+        level++;
     }
 
     public void CompareCards(Card card)
@@ -46,7 +51,6 @@ public class GameManager : MonoBehaviour
                 card.DisableCard();
                 previous.DisableCard();
                 Score(1 + _streak);
-                _streak++;
             }
             else
             {
@@ -63,5 +67,12 @@ public class GameManager : MonoBehaviour
     public void Score(int value)
     {
         _score += value;
+        _streak++;
+        progression--;
+
+        if (progression == 0)
+        {
+            CreateLevel();
+        }
     }
 }
