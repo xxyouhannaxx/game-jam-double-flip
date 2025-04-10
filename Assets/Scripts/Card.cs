@@ -62,7 +62,7 @@ public class Card : MonoBehaviour
 
         while (timer < _animationTime)
         {
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, _animationCurve.Evaluate(timer));
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, _animationCurve.Evaluate(timer / _animationTime));
             yield return waitForEndOfFrame;
             timer += Time.deltaTime;
 
