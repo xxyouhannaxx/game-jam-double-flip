@@ -25,14 +25,14 @@ public class CanvasManager : MonoBehaviour
     /// </summary>
     /// <param name="set">Set of cards</param>
     /// <param name="selectionCallback">a callback on card selection</param>
-    public void GenerateCards(List<CardData> set, CardEventHandler selectionCallback = null)
+    public void GenerateCards(List<CardData> set, float revealTime, CardEventHandler selectionCallback = null)
     {
         ClearCards();
 
         for (int i = 0; i < set.Count; i++)
         {
             Card card = Instantiate(_cardPrefab, _cardsPanel.transform);
-            card.Initialize(set[i]);
+            card.Initialize(set[i], revealTime);
             card.OnCardSelected += selectionCallback;
             _cards.Add(card);
         }

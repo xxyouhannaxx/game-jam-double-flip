@@ -33,6 +33,7 @@ public class Card : MonoBehaviour
     [SerializeField]
     private float _scaleAnimationTime;
 
+    private float _revealTime = 1;
     private Quaternion openedCardRotation = Quaternion.Euler(0, 180, 0);
     private Quaternion closedCardRotation = Quaternion.Euler(0, 0, 0);
     private Coroutine _flipAnimation = null;
@@ -41,11 +42,30 @@ public class Card : MonoBehaviour
     public delegate void CardEventHandler(Card card);
     public CardEventHandler OnCardSelected;
 
-    public void Initialize(CardData data)
+    public void Initialize(CardData data, float revealTime)
     {
         id = data.id;
         _front.sprite = data.frontSprite;
         _title.text = data.title;
+        _button.interactable = false;
+        _revealTime = revealTime;
+        Reveal();
+    }
+  
+    public void Reveal()
+    {
+        _flipAnimation = StartCoroutine(FlipAnimation(true, openedCardRotation, RevealCallback));
+    }
+
+    private void RevealCallback(Card card)
+    {
+        StartCoroutine(Wait(_revealTime));
+    }
+
+    private IEnumerator Wait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Close();
         _button.interactable = true;
     }
 
@@ -54,6 +74,7 @@ public class Card : MonoBehaviour
         StopAllCoroutines();
         Destroy(gameObject);
     }
+
     public void Select()
     {
         if (_flipAnimation == null)
