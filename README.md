@@ -1,4 +1,4 @@
-# Notes for reviewe:
+# Notes for reviewer:
 - Project took about 8 hours (full working day including breaks for meetings and lunch)
 - Pooling was purposefully not implemented
 - PlayerPrefabs were purposefully not used for saving
